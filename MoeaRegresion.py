@@ -6,7 +6,7 @@ import os
 
 
 class MoeaRegresion(OptimProblem):
-    #Constructor
+    # Constructor
     def __init__(self, inputFile: str) -> None:
         super().__init__("regresión simbólica", ReglasPolinomios())
 
@@ -17,8 +17,8 @@ class MoeaRegresion(OptimProblem):
         # Esto resultará en un arreglo de dimensión N x 2
         self.datos = genfromtxt(inputFile, delimiter=',')
 
-
     # Esta función evalúa un vector de valores del individuo para
     # Regresar un escalar de tipo flotante
-    def evaluateProgram(self, program: TreeIndividual):
-
+    #TODO: Investigar bien cómo se pasa el hint typing en python
+    def evaluateProgram(self, program: TreeIndividual) -> [float]:
+        pass

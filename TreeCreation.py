@@ -198,6 +198,8 @@ class TreeIndividual:
         self.__fitness = 0
         self.__eval = 0
         self.__expVal = 0
+        self.__valueVec = [float]
+        self.__rank = 0
 
         if spawnMethod == TreeMethod.GROW:
             self.createGrowMethod(maxDepth)
