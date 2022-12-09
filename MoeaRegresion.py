@@ -16,3 +16,9 @@ class MoeaRegresion(OptimProblem):
         # Leer el archivo de N puntos de la forma (X, Y)
         # Esto resultará en un arreglo de dimensión N x 2
         self.datos = genfromtxt(inputFile, delimiter=',')
+
+
+    # Esta función evalúa un vector de valores del individuo para
+    # Regresar un escalar de tipo flotante
+    def evaluateProgram(self, program: TreeIndividual):
+
