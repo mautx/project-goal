@@ -11,7 +11,7 @@ class MoeaRegresion(OptimProblem):
     # Constructor
     def __init__(self, inputFile: str) -> None:
         super().__init__("regresión simbólica", ReglasPolinomios())
-
+        self.numObjectives = 2
         if not os.path.isfile(inputFile):
             raise Exception(f"\nEl archivo '{inputFile}' de puntos NO existe.\n")
 
