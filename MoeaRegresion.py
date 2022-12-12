@@ -21,6 +21,25 @@ class MoeaRegresion(OptimProblem):
 
     # Esta función evalúa un vector de valores del individuo para
     # Regresar un escalar de tipo flotante
-    #TODO: Investigar bien cómo se pasa el hint typing en python
+    # Esta función es parecida a la función evaluateProgram de ProblemaRegresion
+    # Pero se añade el tamaño de los árboles al final.
     def evaluateProgram(self, program: TreeIndividual) -> List[float]:
-        pass
+        # Calcular el error cuadrado medio. Es decir, la desviación
+        # de los puntos históricos de la predicción del modelo.
+        # El modelo es el árbol 'program'.
+
+        errorCuadrado = 0
+        for punto in self.datos:
+            x = punto[0]  # Este es el punto x de nuestros datos históricos
+            y = punto[1]
+
+            # Calcular predicción usando el modelo que vive en el árbol.
+            yEstimada = program.evaluateTree(x)
+            # print(f"x={x}, y={y}, p(x)=y'={yEstimada}")
+
+            # Acumular la diferencia entre el valor y histórico y el estimado yEst.
+            errorCuadrado += (y - yEstimada) ** 2
+
+        # El error cuadrado medio es lo que queremos minimizar al ir
+        # evolucionando el árbol que representa cada individuo.
+        return [errorCuadrado, program.getDepth()]
