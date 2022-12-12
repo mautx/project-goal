@@ -1,3 +1,5 @@
+from typing import List
+
 from BaseProblem import OptimProblem, ProductionRules
 from TreeCreation import TreeIndividual
 from reglasPoly import ReglasPolinomios
@@ -20,5 +22,5 @@ class MoeaRegresion(OptimProblem):
     # Esta función evalúa un vector de valores del individuo para
     # Regresar un escalar de tipo flotante
     #TODO: Investigar bien cómo se pasa el hint typing en python
-    def evaluateProgram(self, program: TreeIndividual) -> [float]:
+    def evaluateProgram(self, program: TreeIndividual) -> List[float]:
         pass
