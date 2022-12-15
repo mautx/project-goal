@@ -167,8 +167,10 @@ class GeneticProgram:
             # Partimos desde el siguiente individuo en la lista hasta el tamaño total de la población
             for j in range(i + 1, len(population)):
                 # Creamos dos vectores X y Y para evaluarlos con la dominancia
-                x = [population[i].getEvaluation(), population[i].getDepth()]
-                y = [population[j].getEvaluation(), population[i].getDepth()]
+                x = population[i].getEvaluation()
+                y = population[j].getEvaluation()
+                #enviamos a la función isDominance un vector con los resultados de
+                #el método evaluateTreede la clase MOEaregression
                 # En caso de que Y domine a X, aumentamos el contador.
                 if self.__isDominance(y, x):
                     score += 1
