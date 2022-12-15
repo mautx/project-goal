@@ -137,7 +137,9 @@ class GeneticProgram:
 
     # Este método evalúa cada uno de los individuos (árboles o programas)
     # y al final, se asigna la aptitud según su evaluación.
+    #TODO preguntar si mejor hacemos una clase base para problemaGP
     def __evalPopulation(self, population: List[TreeIndividual]):
+
         i = 0
         for ind in population:
             # El árbol se interpreta y se usa para resolver nuestro problema.
@@ -175,11 +177,11 @@ class GeneticProgram:
                 if self.__isDominance(y, x):
                     score += 1
             # El score pasa a ser la eval del individuo
-            population[i].setEvaluation(score)
+            population[i].setRank(score)
             # El mecanismo está hecho suponiendo minimización SIN restricción.
-            if population[i].getEvaluation() > 0:
+            if population[i].getRank() > 0:
                 # Cuando la evaluation es cercana a 0 (lo cual queremos), la aptitud es GRANDE.
-                population[i].setFitness(1.0 / population[i].getEvaluation())
+                population[i].setFitness(1.0 / population[i].getRank())
             elif population[i].getEvaluation() == 0:
                 # Si la evaluación es 0, la aptitud será el mejor valor posible.
                 population[i].setFitness(sys.float_info.max)
