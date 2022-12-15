@@ -230,6 +230,12 @@ class TreeIndividual:
     def setEvaluation(self, eval):
         self.__eval = eval
 
+    def setRank(self, rank):
+        self.__rank = rank
+
+    def getRank(self) -> int:
+        return self.__rank
+
     def getDepth(self) -> int:
         return self.__depth
 
