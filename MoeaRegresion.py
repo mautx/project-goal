@@ -23,6 +23,9 @@ class MoeaRegresion(OptimProblem):
     # Regresar un escalar de tipo flotante
     # Esta función es parecida a la función evaluateProgram de ProblemaRegresion
     # Pero se añade el tamaño de los árboles al final.
+
+    ##Esta función recibe un TreeIndividual y regresa una
+    ##Lista float [errorCuadrado, getDepth]
     def evaluateProgram(self, program: TreeIndividual) -> List[float]:
         # Calcular el error cuadrado medio. Es decir, la desviación
         # de los puntos históricos de la predicción del modelo.
@@ -37,7 +40,7 @@ class MoeaRegresion(OptimProblem):
             yEstimada = program.evaluateTree(x)
             # print(f"x={x}, y={y}, p(x)=y'={yEstimada}")
 
-            # Acumular la diferencia entre el valor y histórico y el estimado yEst.
+            # Acumular la diferencia entre el valor e histórico y el estimado yEst.
             errorCuadrado += (y - yEstimada) ** 2
 
         # El error cuadrado medio es lo que queremos minimizar al ir

@@ -3,6 +3,7 @@ import argparse, sys, os
 
 ## Importar el módulo principal del Programa Genético.
 import gprogram as gp
+from MoeaRegresion import MoeaRegresion
 
 ## Este módulo es que debemos cambiar para cada problema nuevo.
 from ProblemaRegresion import *
@@ -39,7 +40,7 @@ def main():
     ###    i) Cómo representar los polinomios que deberán ajustarse a nuestros puntos.
     ###   ii) Cómo evaluar cada uno de los árboles (polinomios) según la desviación a los puntos.
     archivoEntrada = args.dFile
-    problema = RegresionProblem(archivoEntrada)
+    problema = MoeaRegresion(archivoEntrada)
 
     ### 3. Crear el objeto GP y optimizar el problema.
     myGP = gp.GeneticProgram(problema, args.psize, args.ngens, args.pxover, args.pmut, args.depth)
