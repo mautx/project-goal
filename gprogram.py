@@ -176,6 +176,7 @@ class GeneticProgram:
                 # En caso de que Y domine a X, aumentamos el contador.
                 if self.__isDominance(y, x):
                     score += 1
+            #TODO ¿debemos de dejar el if?
             # El score pasa a ser la eval del individuo
             population[i].setRank(score)
             # El mecanismo está hecho suponiendo minimización SIN restricción.
@@ -191,7 +192,7 @@ class GeneticProgram:
     # Este método retorna verdadero en caso de que el primer vector domine al segundo
     def __isDominance(self, x: List[float], y: List[float]) -> bool:
         counter = 0
-        for i in x:
+        for i in range(len(x)):
             if x[i] > y[i]:
                 return False
             elif x[i] == y[i]:
