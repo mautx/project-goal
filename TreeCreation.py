@@ -169,6 +169,9 @@ class TreeNode:
     def getParent(self) -> 'TreeNode':
         return self.__parent
 
+    def getChildren(self) -> []:
+        return self.__children
+
     def setParent(self, parent: 'TreeNode'):
         self.__parent = parent
 
@@ -238,6 +241,9 @@ class TreeIndividual:
 
     def getDepth(self) -> int:
         return self.__depth
+
+    def getCount(self) -> int:
+        return self.__countTree(self.__root)
 
     # Método público para crear un árbol usando el Full Method.
     # Simplemente invocamos en método general createTree
@@ -398,6 +404,15 @@ class TreeIndividual:
             # Mostrar el paréntesis que cierra la función.
             if root.isFunction():
                 print(")", end=" ", file=streamOutput)
+
+    # countTree cuenta recursivamente los nodos de la raíz
+    def __countTree(self, root) -> int:
+        if not root:
+            return 0
+        count = 1
+        for child in root.getChildren():
+            count += self.__countTree(child)
+        return count
 
     # Este es el método general para crear árboles:
     #   Si pGrow = 1, entonces se comportará con el método FULL, y

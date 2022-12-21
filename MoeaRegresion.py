@@ -45,4 +45,4 @@ class MoeaRegresion(OptimProblem):
 
         # El error cuadrado medio es lo que queremos minimizar al ir
         # evolucionando el árbol que representa cada individuo.
-        return [errorCuadrado, program.getDepth()]
+        return [errorCuadrado, program.getCount()]
