@@ -5,6 +5,9 @@ import sys
 # Importar las clases que implementan un individuo-árbol
 from TreeCreation import *
 
+#modificaciones estéticas
+from tqdm import tqdm
+
 # Importar la clase base de los problemas de optimización
 from BaseProblem import OptimProblem
 
@@ -41,10 +44,11 @@ class GeneticProgram:
         ### 2. Evaluar la 1a población de individuos
         self.__evalPopulation(self.__population)
         self.__superTree = self.__findBest(self.__population)
-
+        print("Por favor espere los resultados.")
         # Ciclo principal para evolucionar la población de programas
         # durante gMax generaciones.
-        for gen in range(1, self.__gMax + 1):
+        for gen in tqdm(range(1, self.__gMax + 1), colour="green"):
+
             ### 3. Seleccionar los padres según el método de la ruleta.
             padresIdx = self.__selectParents(self.__population)
 
@@ -68,7 +72,7 @@ class GeneticProgram:
 
             # self.__showPopulation(self.__population)
 
-            print("\nMejor evaluación de la generación {}: {} eval, {} niveles".format(gen, self.__superTree.getFitness(), self.__superTree.getEvaluation()[1]))
+            #print("\nMejor evaluación de la generación {}: {} eval, {} niveles".format(gen, self.__superTree.getFitness(), self.__superTree.getEvaluation()[1]))
             # Guardar estadísticas de la generación actual
             self.__stats()
 
@@ -181,7 +185,7 @@ class GeneticProgram:
                     score += 1
 
             population[i].setRank(score)
-            print(population[i].getRank())
+
             # El mecanismo está hecho suponiendo minimización SIN restricción.
             if population[i].getRank() > 0:
                 # Cuando la evaluation es cercana a 0 (lo cual queremos), la aptitud es GRANDE.
@@ -295,3 +299,5 @@ class GeneticProgram:
     def __elitism(self, pop: List[TreeIndividual], bestPop: TreeIndividual):
         rnd = np.random.randint(len(pop))
         pop[rnd].assignTree(self.__superTree)
+
+
