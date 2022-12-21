@@ -109,7 +109,7 @@ class GeneticProgram:
 
         i = 1
         for tree in pop:
-            fitFile.write("{:10.6f}\t{:20.6f}\n".format(tree.getFitness(), tree.getEvaluation()))
+            fitFile.write("{:10.6f}\n".format(tree.getFitness()))
 
             treeFile.write(f"Individual {i}")
             tree.showTree(treeFile)
@@ -182,6 +182,7 @@ class GeneticProgram:
 
             #TODO ¿debemos de dejar el if?
             # El score pasa a ser la eval del individuo
+            print("El rank: " + str(score))
             population[i].setRank(score)
 
             # El mecanismo está hecho suponiendo minimización SIN restricción.
