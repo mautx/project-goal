@@ -122,8 +122,8 @@ class RuleSet:
         return len(self.__nonTerminals) > 0 and len(self.__terminals) == 0
 
 
-# Implementa la clase nodo que sirve para construir todo un árbol de expresiones
-# Abajo está la clase que contruye todo un árbol.
+# Implementa la clase nodo que sirve para construir un árbol de expresiones
+# Abajo está la clase que contruye  un árbol.
 class TreeNode:
     def __init__(self, item, arity):
         self.__item = item  # El dato que guarda este nodo.
@@ -256,7 +256,7 @@ class TreeIndividual:
         self.__maxDepth = maxDepth
 
     # Método público que imprime el árbol usando la notación de LISP
-    # Invoca el método privado que toma como parámetro el nodo raíz de TODO el árbol.
+    # Invoca el método privado que toma como parámetro el nodo raíz de  el árbol.
     def showTree(self, streamOutput=None):
         if streamOutput is None:
             streamOutput = sys.stdout
@@ -278,7 +278,7 @@ class TreeIndividual:
     # Está a una profuindad Pm, entonces el subárbol deberá
     # tener profundidad máxima P-Pm.
     # El parámetro pmut es la probabilidad de que se detenga cerca de la raíz.
-    # Es decir, si pmut=1 seleccionará el nodo raíz y reemplazará TODO el árbol.
+    # Es decir, si pmut=1 seleccionará el nodo raíz y reemplazará el árbol.
     #           si pmut=0 seleccionará una hoja y la reemplazará.
     def mutation(self, pmut):
         # Elegir aleatoriamente un nodo del árbol para mutar esa rama.
@@ -365,9 +365,9 @@ class TreeIndividual:
     # A continuación solamente están los método PRIVADOS
     ####################################################
 
-    # Método privado que recursivamente muestra todo el árbol usando
+    # Método privado que recursivamente muestra  el árbol usando
     # la notación de LISP:
-    # Es decir (FUNCIÓN  ARG1  ARG2 ... ARGN), donde ARG puede ser todo un
+    # Es decir (FUNCIÓN  ARG1  ARG2 ... ARGN), donde ARG puede ser  un
     # subárbol de expresiones.
     # Es solamente una forma de mostrar, NO quiere decir que el programa
     # del árbol solamente puede ser LISP. También se podría mostrar como un

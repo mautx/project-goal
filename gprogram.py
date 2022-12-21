@@ -180,8 +180,6 @@ class GeneticProgram:
                 if self.__isDominance(y, x):
                     score += 1
 
-            #TODO ¿debemos de dejar el if?
-            # El score pasa a ser la eval del individuo
             print("El rank: " + str(score))
             population[i].setRank(score)
 
