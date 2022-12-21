@@ -68,7 +68,7 @@ class GeneticProgram:
 
             # self.__showPopulation(self.__population)
 
-            print("\nMejor evaluación de la generación {}: {}".format(gen, self.__superTree.getEvaluation()))
+            print("\nMejor evaluación de la generación {}: {}".format(gen, self.__superTree.getRank()))
             # Guardar estadísticas de la generación actual
             self.__stats()
 
@@ -179,6 +179,7 @@ class GeneticProgram:
             #TODO ¿debemos de dejar el if?
             # El score pasa a ser la eval del individuo
             population[i].setRank(score)
+            population[i].setEvaluation(score)
             # El mecanismo está hecho suponiendo minimización SIN restricción.
             if population[i].getRank() > 0:
                 # Cuando la evaluation es cercana a 0 (lo cual queremos), la aptitud es GRANDE.
