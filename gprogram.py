@@ -5,8 +5,10 @@ import sys
 # Importar las clases que implementan un individuo-árbol
 from TreeCreation import *
 
-#modificaciones estéticas
+# modificaciones estéticas
 from tqdm import tqdm
+
+from math import sqrt
 
 # Importar la clase base de los problemas de optimización
 from BaseProblem import OptimProblem
@@ -48,7 +50,6 @@ class GeneticProgram:
         # Ciclo principal para evolucionar la población de programas
         # durante gMax generaciones.
         for gen in tqdm(range(1, self.__gMax + 1), colour="green"):
-
             ### 3. Seleccionar los padres según el método de la ruleta.
             padresIdx = self.__selectParents(self.__population)
 
@@ -67,12 +68,14 @@ class GeneticProgram:
             ### 7. Realizamos el otorgamiento de la aptitud
             self.__moeaRankings(self.__childrenPop)
 
+            self.__computeSharedFitness(self.__childrenPop)
+
             # self.__printEvalPop(self.__childrenPop)
             self.__superTree = self.__findBest(self.__childrenPop)
 
             # self.__showPopulation(self.__population)
 
-            #print("\nMejor evaluación de la generación {}: {} eval, {} niveles".format(gen, self.__superTree.getFitness(), self.__superTree.getEvaluation()[1]))
+            # print("\nMejor evaluación de la generación {}: {} eval, {} niveles".format(gen, self.__superTree.getFitness(), self.__superTree.getEvaluation()[1]))
             # Guardar estadísticas de la generación actual
             self.__stats()
 
@@ -141,7 +144,7 @@ class GeneticProgram:
 
     # Este método evalúa cada uno de los individuos (árboles o programas)
     # y al final, se asigna la aptitud según su evaluación.
-    #TODO preguntar si mejor hacemos una clase base para problemaGP
+    # TODO preguntar si mejor hacemos una clase base para problemaGP
     def __evalPopulation(self, population: List[TreeIndividual]):
 
         i = 0
@@ -151,7 +154,7 @@ class GeneticProgram:
             eval = self.__problem.evaluateProgram(ind)
             # print(f"\nEvaluación del individuo {i}: {eval}", end="")
             # ??????
-            #i += 1
+            # i += 1
             ind.setEvaluation(eval)
             """
             # El mecanismo está hecho suponiendo minimización SIN restricción.
@@ -164,6 +167,7 @@ class GeneticProgram:
             else:
                 raise Exception("The evaluation must be equal or greater than 0")
             """
+
     # Este método asigna la aptitud de todos los individuos para que un vector
     # de puntos pueda ser considerado un.
 
@@ -177,9 +181,8 @@ class GeneticProgram:
                 x = population[i].getEvaluation()
                 y = population[j].getEvaluation()
 
-
-                #enviamos a la función isDominance un vector con los resultados de
-                #el método evaluateTreede la clase MOEaregression
+                # enviamos a la función isDominance un vector con los resultados de
+                # el método evaluateTreede la clase MOEaregression
                 # En caso de que Y domine a X, aumentamos el contador.
                 if self.__isDominance(y, x):
                     score += 1
@@ -208,6 +211,30 @@ class GeneticProgram:
             return False
         else:
             return True
+
+    def __computeSharedFitness(self, population: List[TreeIndividual]):
+
+        nicheCount = self.__computeNicheCount(population)
+        for i in range(len(population)):
+            population[i].setFitness(population[i].getFitness() / nicheCount[i])
+
+    def __computeNicheCount(self, population: List[TreeIndividual]):
+        nicheCount = [1] * len(population)
+        for i in range(len(population)):
+            for j in range(i + 1, len(population)):
+                d = self.__distance(population[i], population[j])
+                nicheCount[i] += self.__sharingFunction(d, 1, 2.0 / (len(population) - 1))
+        return nicheCount
+
+    def __distance(self, x: TreeIndividual, y: TreeIndividual):
+        return math.sqrt(
+            (x.getEvaluation()[0] - y.getEvaluation()[0]) ** 2 + (x.getEvaluation()[1] - y.getEvaluation()[1]) ** 2)
+
+    def __sharingFunction(self, d, alfa, sigma):
+        if d < sigma:
+            return 1 - pow(d / sigma, alfa)
+        else:
+            return 0
 
     # Seleccionar los padres que debemos cruzar usando el mecanismo de ruleta.
     # La salida son las posiciones de los padres seleccionados (incluso hay repetidos).
@@ -299,5 +326,3 @@ class GeneticProgram:
     def __elitism(self, pop: List[TreeIndividual], bestPop: TreeIndividual):
         rnd = np.random.randint(len(pop))
         pop[rnd].assignTree(self.__superTree)
-
-
