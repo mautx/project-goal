@@ -172,15 +172,18 @@ class GeneticProgram:
                 # Creamos dos vectores X y Y para evaluarlos con la dominancia
                 x = population[i].getEvaluation()
                 y = population[j].getEvaluation()
+
+
                 #enviamos a la función isDominance un vector con los resultados de
                 #el método evaluateTreede la clase MOEaregression
                 # En caso de que Y domine a X, aumentamos el contador.
                 if self.__isDominance(y, x):
                     score += 1
+
             #TODO ¿debemos de dejar el if?
             # El score pasa a ser la eval del individuo
             population[i].setRank(score)
-            population[i].setEvaluation(score)
+
             # El mecanismo está hecho suponiendo minimización SIN restricción.
             if population[i].getRank() > 0:
                 # Cuando la evaluation es cercana a 0 (lo cual queremos), la aptitud es GRANDE.

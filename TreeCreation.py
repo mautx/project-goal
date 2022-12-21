@@ -224,7 +224,7 @@ class TreeIndividual:
     def setFitness(self, fit):
         self.__fitness = fit
 
-    def getEvaluation(self) -> float:
+    def getEvaluation(self) -> List[float]:
         return self.__eval
 
     def setEvaluation(self, eval):
