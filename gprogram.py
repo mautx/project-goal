@@ -189,7 +189,8 @@ class GeneticProgram:
             if population[i].getRank() > 0:
                 # Cuando la evaluation es cercana a 0 (lo cual queremos), la aptitud es GRANDE.
                 population[i].setFitness(1.0 / population[i].getRank())
-            elif population[i].getEvaluation() == 0:
+                print("El fitness: " + str(population[i].getFitness()))
+            elif population[i].getRank() == 1:
                 # Si la evaluación es 0, la aptitud será el mejor valor posible.
                 population[i].setFitness(sys.float_info.max)
             else:
