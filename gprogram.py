@@ -68,7 +68,7 @@ class GeneticProgram:
 
             # self.__showPopulation(self.__population)
 
-            print("\nMejor evaluación de la generación {}: {}".format(gen, self.__superTree.getRank()))
+            #print("\nMejor evaluación de la generación {}: {}".format(gen, self.__superTree.getRank()))  <-----------------------desprintear este
             # Guardar estadísticas de la generación actual
             self.__stats()
 
@@ -146,7 +146,8 @@ class GeneticProgram:
             # El desempeño (eval) del árbol se regresa y guarda en el propio individuo.
             eval = self.__problem.evaluateProgram(ind)
             # print(f"\nEvaluación del individuo {i}: {eval}", end="")
-            i += 1
+            # ??????
+            #i += 1
             ind.setEvaluation(eval)
             """
             # El mecanismo está hecho suponiendo minimización SIN restricción.

@@ -196,7 +196,7 @@ class TreeIndividual:
         self.__pRules = prodRules  # Reglas de producción para generar los árboles de expresiones.
         self.__symTable = self.__pRules.getSymTable()
         self.__fitness = 0
-        self.__eval = 0
+        self.__eval = []
         self.__expVal = 0
         self.__valueVec = [float]
         self.__rank = 0
