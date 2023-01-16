@@ -72,7 +72,7 @@ class GeneticProgram:
             ### 7. Realizamos el otorgamiento de la aptitud
             self.__moeaRankings(self.__childrenPop)
 
-            #self.__computeSharedFitness(self.__childrenPop)
+            self.__computeSharedFitness(self.__childrenPop)
 
             # self.__printEvalPop(self.__childrenPop)
             self.__superTree = self.__findBest(self.__childrenPop)
