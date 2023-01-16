@@ -27,6 +27,7 @@ class GeneticProgram:
         self.__gMax = gMax  # Número de generaciones para evolucionar la población
         self.__pCrossover = pcross  # Probabilidad de cruza de cada par de padres.
         self.__pMutation = pmut  # Probabilidad de mutación para cada individuo.
+        self.__MVPList = []      #Lista de los mejores árboles de cada generación.
         self.__population = []  # Población actual al inicio de cada generación.
         self.__childrenPop = []  # Población de hijos como resultado de la cruza.
         self.__treeMethod = typeTree  # Método para crear la población.
@@ -158,8 +159,9 @@ class GeneticProgram:
         x = np.array(x)
         y = np.array(y)
 
-        normX = preprocessing.normalize([x])
-        normY = preprocessing.normalize([y])
+        #Normalización de datos
+        #normX = preprocessing.normalize([x])
+        #normY = preprocessing.normalize([y])
 
         fig, ax = plt.subplots()
         ax.scatter(x, y)
@@ -212,7 +214,7 @@ class GeneticProgram:
                     score += 1
 
             population[i].setRank(score)
-
+            #TODO se me hace que por aqui está el error
             # El mecanismo está hecho suponiendo minimización SIN restricción.
             if population[i].getRank() > 0:
                 # Cuando la evaluation es cercana a 0 (lo cual queremos), la aptitud es GRANDE.
@@ -351,3 +353,5 @@ class GeneticProgram:
     def __elitism(self, pop: List[TreeIndividual], bestPop: TreeIndividual):
         rnd = np.random.randint(len(pop))
         pop[rnd].assignTree(self.__superTree)
+
+    def __MVP(self, pop: List[TreeIndividual]):
