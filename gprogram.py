@@ -13,7 +13,11 @@ from math import sqrt
 # Importar la clase base de los problemas de optimización
 from BaseProblem import OptimProblem
 
+import matplotlib.pyplot as plt
 
+from sklearn import preprocessing
+
+#Todo Hacer
 # Clase principal que implementa el ciclo para evolucionar
 # una población de individuos representados por árboles.
 class GeneticProgram:
@@ -42,7 +46,7 @@ class GeneticProgram:
         gen = 1
         self.__initPopulation(self.__population)
         # self.__showPopulation(self.__population) # Se puede comentar
-
+        #TODO crear archivo que imprima todos los individuos de cada generación
         ### 2. Evaluar la 1a población de individuos
         self.__evalPopulation(self.__population)
         self.__superTree = self.__findBest(self.__population)
@@ -68,7 +72,7 @@ class GeneticProgram:
             ### 7. Realizamos el otorgamiento de la aptitud
             self.__moeaRankings(self.__childrenPop)
 
-            self.__computeSharedFitness(self.__childrenPop)
+            #self.__computeSharedFitness(self.__childrenPop)
 
             # self.__printEvalPop(self.__childrenPop)
             self.__superTree = self.__findBest(self.__childrenPop)
@@ -88,6 +92,8 @@ class GeneticProgram:
 
         # Guardar la salida en archivos
         self.__writeOutput(self.__population)
+
+        self.__printGraph(self.__population)
 
     ######## Fin de optimize()
     ################################################
@@ -116,8 +122,8 @@ class GeneticProgram:
 
         i = 1
         for tree in pop:
-            fitFile.write("{:10.6f}\n".format(tree.getFitness()))
-
+            #fitFile.write(f"Rank: {tree.getRank()} Aptitud: {tree.getFitness():.2f} Costo: {tree.getEvaluation()[0]:.3f} Nodos: {tree.getEvaluation()[1]:.1f}\n")
+            fitFile.write(f" {tree.getRank()} {tree.getFitness():.2f}  {tree.getEvaluation()[0]:.3f}  {tree.getEvaluation()[1]:.1f}\n")
             treeFile.write(f"Individual {i}")
             tree.showTree(treeFile)
             treeFile.write("\n\n")
@@ -141,6 +147,24 @@ class GeneticProgram:
             print("\nArbol ", i + 1, ":")
             pop[i].showTree()
             print("\n")
+
+
+    def __printGraph(self, pop:List[TreeIndividual]):
+        x = list()
+        y = list()
+        for ind in pop:
+            x.append(ind.getEvaluation()[0])
+            y.append(ind.getEvaluation()[1])
+        x = np.array(x)
+        y = np.array(y)
+
+        normX = preprocessing.normalize([x])
+        normY = preprocessing.normalize([y])
+
+        fig, ax = plt.subplots()
+        ax.scatter(x, y)
+        plt.show()
+
 
     # Este método evalúa cada uno de los individuos (árboles o programas)
     # y al final, se asigna la aptitud según su evaluación.
@@ -170,7 +194,7 @@ class GeneticProgram:
 
     # Este método asigna la aptitud de todos los individuos para que un vector
     # de puntos pueda ser considerado un.
-
+    #TODO Hacer pequeñas pruebas para verificar el ranking, la aptitud y
     def __moeaRankings(self, population: List[TreeIndividual]):
         for i in range(len(population)):
             # Creamos el score que comenzará en 1 para evitar que la evaluación sea 0
@@ -226,6 +250,7 @@ class GeneticProgram:
                 nicheCount[i] += self.__sharingFunction(d, 1, 2.0 / (len(population) - 1))
         return nicheCount
 
+    #TODO Realizar un método de normalización para integrar en diferentes lugares
     def __distance(self, x: TreeIndividual, y: TreeIndividual):
         return math.sqrt(
             (x.getEvaluation()[0] - y.getEvaluation()[0]) ** 2 + (x.getEvaluation()[1] - y.getEvaluation()[1]) ** 2)
@@ -250,7 +275,7 @@ class GeneticProgram:
         return parentsIdx
 
     # Cruzar los padres ya seleccionados, y regresa la población de hijos
-    # resultante.
+    # resutante.
     def __crossoverParents(self, parentsIdx, pop: List[TreeIndividual]):
         childPop = []
 
