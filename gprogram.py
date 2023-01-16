@@ -202,10 +202,11 @@ class GeneticProgram:
             # Creamos el score que comenzará en 1 para evitar que la evaluación sea 0
             score = 1
             # Partimos desde el siguiente individuo en la lista hasta el tamaño total de la población
-            for j in range(i + 1, len(population)):
+            for j in range(len(population) - 1):
+                itero = (j + i + 1) % len(population)
                 # Creamos dos vectores X y Y para evaluarlos con la dominancia
                 x = population[i].getEvaluation()
-                y = population[j].getEvaluation()
+                y = population[itero].getEvaluation()
 
                 # enviamos a la función isDominance un vector con los resultados de
                 # el método evaluateTreede la clase MOEaregression
@@ -355,3 +356,4 @@ class GeneticProgram:
         pop[rnd].assignTree(self.__superTree)
 
     def __MVP(self, pop: List[TreeIndividual]):
+        pass
