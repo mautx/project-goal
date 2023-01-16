@@ -122,8 +122,8 @@ class RuleSet:
         return len(self.__nonTerminals) > 0 and len(self.__terminals) == 0
 
 
-# Implementa la clase nodo que sirve para construir todo un árbol de expresiones
-# Abajo está la clase que contruye todo un árbol.
+# Implementa la clase nodo que sirve para construir un árbol de expresiones
+# Abajo está la clase que contruye  un árbol.
 class TreeNode:
     def __init__(self, item, arity):
         self.__item = item  # El dato que guarda este nodo.
@@ -169,6 +169,9 @@ class TreeNode:
     def getParent(self) -> 'TreeNode':
         return self.__parent
 
+    def getChildren(self) -> []:
+        return self.__children
+
     def setParent(self, parent: 'TreeNode'):
         self.__parent = parent
 
@@ -196,8 +199,10 @@ class TreeIndividual:
         self.__pRules = prodRules  # Reglas de producción para generar los árboles de expresiones.
         self.__symTable = self.__pRules.getSymTable()
         self.__fitness = 0
-        self.__eval = 0
+        self.__eval = []
         self.__expVal = 0
+        self.__valueVec = [float]
+        self.__rank = 0
 
         if spawnMethod == TreeMethod.GROW:
             self.createGrowMethod(maxDepth)
@@ -222,11 +227,23 @@ class TreeIndividual:
     def setFitness(self, fit):
         self.__fitness = fit
 
-    def getEvaluation(self) -> float:
+    def getEvaluation(self) -> List[float]:
         return self.__eval
 
     def setEvaluation(self, eval):
         self.__eval = eval
+
+    def setRank(self, rank):
+        self.__rank = rank
+
+    def getRank(self) -> int:
+        return self.__rank
+
+    def getDepth(self) -> int:
+        return self.__depth
+
+    def getCount(self) -> int:
+        return self.__countTree(self.__root)
 
     # Método público para crear un árbol usando el Full Method.
     # Simplemente invocamos en método general createTree
@@ -245,7 +262,7 @@ class TreeIndividual:
         self.__maxDepth = maxDepth
 
     # Método público que imprime el árbol usando la notación de LISP
-    # Invoca el método privado que toma como parámetro el nodo raíz de TODO el árbol.
+    # Invoca el método privado que toma como parámetro el nodo raíz de  el árbol.
     def showTree(self, streamOutput=None):
         if streamOutput is None:
             streamOutput = sys.stdout
@@ -267,7 +284,7 @@ class TreeIndividual:
     # Está a una profuindad Pm, entonces el subárbol deberá
     # tener profundidad máxima P-Pm.
     # El parámetro pmut es la probabilidad de que se detenga cerca de la raíz.
-    # Es decir, si pmut=1 seleccionará el nodo raíz y reemplazará TODO el árbol.
+    # Es decir, si pmut=1 seleccionará el nodo raíz y reemplazará el árbol.
     #           si pmut=0 seleccionará una hoja y la reemplazará.
     def mutation(self, pmut):
         # Elegir aleatoriamente un nodo del árbol para mutar esa rama.
@@ -354,9 +371,9 @@ class TreeIndividual:
     # A continuación solamente están los método PRIVADOS
     ####################################################
 
-    # Método privado que recursivamente muestra todo el árbol usando
+    # Método privado que recursivamente muestra  el árbol usando
     # la notación de LISP:
-    # Es decir (FUNCIÓN  ARG1  ARG2 ... ARGN), donde ARG puede ser todo un
+    # Es decir (FUNCIÓN  ARG1  ARG2 ... ARGN), donde ARG puede ser  un
     # subárbol de expresiones.
     # Es solamente una forma de mostrar, NO quiere decir que el programa
     # del árbol solamente puede ser LISP. También se podría mostrar como un
@@ -387,6 +404,15 @@ class TreeIndividual:
             # Mostrar el paréntesis que cierra la función.
             if root.isFunction():
                 print(")", end=" ", file=streamOutput)
+
+    # countTree cuenta recursivamente los nodos de la raíz
+    def __countTree(self, root) -> int:
+        if not root:
+            return 0
+        count = 1
+        for child in root.getChildren():
+            count += self.__countTree(child)
+        return count
 
     # Este es el método general para crear árboles:
     #   Si pGrow = 1, entonces se comportará con el método FULL, y
@@ -495,4 +521,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
