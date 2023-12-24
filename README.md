@@ -1,4 +1,4 @@
-# Proyecto de MOPG en Python con CUDA
+en# Proyecto de MOPG en Python con CUDA
 
 Este proyecto implementa Métodos de Optimización para Problemas de Grafos (MOPG) en Python haciendo uso de la tecnología CUDA para aceleración GPU.
 
@@ -15,7 +15,7 @@ El objetivo de este proyecto es proporcionar una implementación eficiente y par
 ## Requisitos
 
 - Python 3.x
-- Bibliotecas Python: (listar las bibliotecas y sus versiones)
+- Bibliotecas Python: ----pendiente----
 - GPU compatible con CUDA y controladores NVIDIA.
 
 ## Instalación
@@ -23,4 +23,4 @@ El objetivo de este proyecto es proporcionar una implementación eficiente y par
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tu_usuario/tu_proyecto.git
+   git clone https://github.com/mautx/project-goal
